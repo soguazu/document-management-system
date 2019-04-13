@@ -8,7 +8,6 @@ import httpStatus from 'http-status-codes';
 const authentication = {};
 
 authentication.login = async (request, response) => {
-
     //Calling a helper function to validate parameters passed through the body
     const { error } = helpers.authValidate(request.body);
 
@@ -55,10 +54,16 @@ authentication.login = async (request, response) => {
         .send(httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR));
 };
 
+authentication.logout = async (request, response) => {
+    const token = request.header['x-auth-token'];
+    const error = await tokenServices.deleteToken(token);
+    if (!error) {
+        return response.send('Logged out successfully');
+    }
 
-
-// authentication.logout = async (request, response) => {
-
-// }
+    return response
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .send(httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR));
+};
 
 export default authentication;
