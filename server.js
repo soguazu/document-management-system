@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 
 import config from './config';
 import authRouter from './app/routes/auth';
+import logoutRouter from './app/routes/logout';
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ mongoose
     .catch(error => console.log(error.message));
 
 app.use('/api/auth', authRouter);
+app.use('/api/logout', logoutRouter);
 
 app.listen(config.httpPort, () => {
     console.log(

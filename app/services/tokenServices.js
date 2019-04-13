@@ -19,7 +19,10 @@ services.postToken =  async (reqToken) => {
 services.deleteToken = async (reqToken) => {
     await Token.deleteOne({
         token: reqToken 
-    }, (error) => console.log(error));
+    }, (error) => {
+        console.log(error);
+        return error;
+    });
 
 };
 
