@@ -1,12 +1,14 @@
 import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
-import userServices from '../services/authService';
+import authServices from '../services/authService';
 import tokenServices from '../services/tokenServices';
 import helpers from '../helpers/util';
 import httpStatus from 'http-status-codes';
 
 const authentication = {};
 
+
+// Login controller
 authentication.login = async (request, response) => {
     //Calling a helper function to validate parameters passed through the body
     const { error } = helpers.authValidate(request.body);
@@ -19,11 +21,12 @@ authentication.login = async (request, response) => {
     }
 
     //Checking if email already exist
-    const user = userServices.getOnebyEmail(request.body.email);
+    const user = await authServices.getOnebyEmail(request.body.email);
+
     if (!user) {
         return response
             .status(httpStatus.BAD_REQUEST)
-            .send('Invalid username or password');
+            .send('Invalid username or password1');
     }
 
     //Validating if passwords match
@@ -32,10 +35,10 @@ authentication.login = async (request, response) => {
         user.password
     );
 
-    if (validPassword) {
+    if (!validPassword) {
         return response
             .status(httpStatus.BAD_REQUEST)
-            .send('Invalid username or password');
+            .send('Invalid username or password2');
     }
 
     //Generating token if login was successfully
@@ -46,16 +49,20 @@ authentication.login = async (request, response) => {
 
     //Validating that token was saved successfully
     if (archivedToken) {
-        response.header('x-auth-token', token).send('Logged in successfully');
+        return response.header('x-auth-token', token).send('Logged in successfully');
     }
 
-    response
+    return response
         .status(httpStatus.INTERNAL_SERVER_ERROR)
         .send(httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR));
 };
 
+
+
+
+// logout controller
 authentication.logout = async (request, response) => {
-    const token = request.header['x-auth-token'];
+    const token = request.header('x-auth-token');
     const error = await tokenServices.deleteToken(token);
     if (!error) {
         return response.send('Logged out successfully');
