@@ -27,7 +27,7 @@ environments.test = {
     envName: 'test',
     hashingSecret: process.env.MY_SECRET,
     httpPort: 3000,
-    db: 'mongodb://localhost/dms'
+    db: 'mongodb://localhost/dms-test'
 };
 
 // Determine which environment was passed as a command-line argument

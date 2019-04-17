@@ -31,7 +31,6 @@ services.getAll = async () => {
 
 services.getByEmail = async email => {
     const user = await User.findOne({ email: email });
-    console.log(user,'services');
     return user;
 };
 
@@ -41,7 +40,7 @@ services.getById = async id => {
 };
 
 services.update = async (id, payload) => {
-    const user = await User.findByIdAndUpdate(
+    const user = await User.findOneAndUpdate(
         id,
         {
             username: payload.username,
@@ -61,7 +60,7 @@ services.update = async (id, payload) => {
 };
 
 services.delete = async id => {
-    const user = await User.findByIdAndRemove(id);
+    const user = await User.findOneAndDelete(id);
     if (user) {
         return user;
     }

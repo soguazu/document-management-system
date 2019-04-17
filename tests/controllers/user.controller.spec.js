@@ -1,0 +1,160 @@
+/* eslint-disable no-undef */
+import 'babel-polyfill';
+
+// import sinon from 'sinon';
+// import mongoose from 'mongoose';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+chai.use(chaiHttp);
+chai.should();
+
+import app from '../../server';
+import { User } from '../../app/models/user';
+// import userController from '../../app/controllers/user';
+
+describe('User', () => {
+    beforeEach(function(done) {
+        User.remove({}, function() {
+            done();
+        });
+    });
+    describe('/POST users', function() {
+        it('should not create a user without a email address,name,password,role', function() {
+            let user = {
+                username: 'soguazu',
+                name: {
+                    firstname: 'grey',
+                    lastname: 'white'
+                },
+                role: 'user',
+                password: 'Livina1604'
+            };
+
+            chai.request(app)
+                .post('/api/users')
+                .send(user)
+                .end(function(error, response) {
+                    response.should.have.status(400);
+                    response.body.should.be.an('object');
+                });
+        });
+
+        it('should create a user if the listed payload is provided a email address,name,password,role', function() {
+            let user = {
+                username: 'soguazu',
+                email: 'grey@gmail.com',
+                name: {
+                    firstname: 'grey',
+                    lastname: 'white'
+                },
+                role: 'user',
+                password: 'Livina1604'
+            };
+
+            chai.request(app)
+                .post('/api/users')
+                .send(user)
+                .end(function(error, response) {
+                    response.should.have.status(200);
+                    response.body.should.be.an('object');
+                    response.body.name.should.have.property('firstname');
+                    response.body.name.should.have.property('lastname');
+                    response.body.should.have.property('email');
+                    response.body.username.should.equal('soguazu');
+                });
+        });
+    });
+
+    describe('GET user', () => {
+        it('should return all users', done => {
+            chai.request(app)
+                .get('/api/users')
+                .end(function(error, response) {
+                    response.should.have.status(200);
+                    response.body.should.be.an('array');
+                    response.body.length.should.be.eql(0);
+                    done();
+                });
+        });
+    });
+
+    describe('PUT user/:id', () => {
+        it('should update the user with the given id', done => {
+            let user = new User({
+                username: 'greywhite',
+                name: {
+                    firstname: 'stanley',
+                    lastname: 'white'
+                },
+                email: 'stan@gmail.com',
+                password: 'Livina1604',
+                role: 'admin'
+            });
+            user.save(function(error, user) {
+                chai.request(app)
+                    .put('/api/users/' + user._id)
+                    .send({
+                        username: 'greyyellow',
+                        name: {
+                            firstname: 'john',
+                            lastname: 'doe'
+                        },
+                        email: 'sog@gmail.com',
+                        password: 'Livina1604',
+                        role: 'admin'
+                    })
+                    .end(function(error, response) {
+                        response.should.have.status(200);
+                        done();
+                    });
+            });
+        });
+    });
+
+    describe('GET user/:id', () => {
+        it('should update the user with the given id', done => {
+            let user = new User({
+                username: 'greywhite',
+                name: {
+                    firstname: 'stanley',
+                    lastname: 'white'
+                },
+                email: 'stan@gmail.com',
+                password: 'Livina1604',
+                role: 'admin'
+            });
+            user.save(function(error, user) {
+                chai.request(app)
+                    .get('/api/users/' + user._id)
+                    .end(function(error, response) {
+                        response.should.have.status(200);
+                        response.body.name.lastname.should.equal('white');
+                        done();
+                    });
+            });
+        });
+    });
+
+    describe('DELETE user/:id', () => {
+        it('should update the user with the given id', done => {
+            let user = new User({
+                username: 'greywhite',
+                name: {
+                    firstname: 'stanley',
+                    lastname: 'white'
+                },
+                email: 'stan@gmail.com',
+                password: 'Livina1604',
+                role: 'admin'
+            });
+            user.save(function(error, user) {
+                chai.request(app)
+                    .delete('/api/users/' + user._id)
+                    .end(function(error, response) {
+                        response.should.have.status(200);
+                        done();
+                    });
+            });
+        });
+    });
+});
