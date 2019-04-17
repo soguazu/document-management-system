@@ -55,7 +55,7 @@ router.post('/', roleController.create);
  * @swagger
  * /api/roles:
  *    get:
- *      summary: returns all users.
+ *      summary: returns all roles.
  *      tags: [/api/roles]
  *      description: This should return all roles
  *      parameters:
@@ -124,7 +124,7 @@ router.get('/:id', roleController.getOne);
  * @swagger
  * /api/roles/{id}:
  *    put:
- *      summary: updates a user with the given id.
+ *      summary: updates a role with the given id.
  *      tags: [/api/roles]
  *      consumes:
  *        - application/json
@@ -163,7 +163,7 @@ router.put('/:id', roleController.update);
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/roles/{id}:
  *    delete:
  *      summary: delete a role with the given id.
  *      tags: [/api/roles]
@@ -174,17 +174,13 @@ router.put('/:id', roleController.update);
  *        - in: path
  *          name: id
  *          description: The ID of the role to delete.
- *      schema:
- *        type: object
- *        required:
- *          - id
  *      responses:
  *        200:
- *          description: role updated successfully
+ *          description: role deleted successfully
  *          schema:
  *            type: string
  *        400:
- *          description: Could not update the role
+ *          description: Could delete the role
  *          schema:
  *            type: string
  *        401:
