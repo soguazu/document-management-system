@@ -1,13 +1,14 @@
 import httpStatus from 'http-status-codes';
 
 import { validateUser } from '../models/user';
-import userSerices from '../services/userServices';
+import userServices from '../services/userServices';
 import helpers from '../helpers/util';
 
 const user = {};
 
 user.create = async (request, response) => {
     const { error } = validateUser(request.body);
+
     if (error) {
         return response
             .status(httpStatus.BAD_REQUEST)
@@ -18,7 +19,7 @@ user.create = async (request, response) => {
 
     if (!isTaken) {
         try {
-            const user = await userSerices.post(request.body);
+            const user = await userServices.post(request.body);
             return response.send(user);
         } catch (exception) {
             return response
@@ -31,18 +32,13 @@ user.create = async (request, response) => {
 };
 
 user.getAll = async (request, response) => {
-    const users = await userSerices.getAll();
-    if (!users) {
-        response
-            .status(httpStatus.INTERNAL_SERVER_ERROR)
-            .send(httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR));
-    }
+    const users = await userServices.getAll();
 
     response.send(users);
 };
 
 user.getOne = async (request, response) => {
-    const user = await userSerices.getById(request.params.id);
+    const user = await userServices.getById(request.params.id);
     if (!user) {
         return response
             .status(httpStatus.NOT_FOUND)
@@ -53,7 +49,7 @@ user.getOne = async (request, response) => {
 };
 
 user.update = async (request, response) => {
-    const user = await userSerices.update(request.params.id, request.body);
+    const user = await userServices.update(request.params.id, request.body);
 
     if (!user) {
         return response
@@ -64,7 +60,7 @@ user.update = async (request, response) => {
 };
 
 user.delete = async (request, response) => {
-    const user = await userSerices.delete(request.params.id);
+    const user = await userServices.delete(request.params.id);
     if (!user) {
         return response
             .status(httpStatus.NOT_FOUND)

@@ -34,8 +34,10 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function() {
-    
-    const token = jwt.sign({ _id: this._id, role: this.role }, config.hashingSecret, {expiresIn: Date.now() * 60 * 60 * 24});
+    const token = jwt.sign(
+        { _id: this._id, role: this.role },
+        config.hashingSecret
+    );
 
     return token;
 };

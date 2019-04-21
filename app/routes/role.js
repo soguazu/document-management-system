@@ -49,7 +49,7 @@ const router = express.Router();
  *            type: string
  */
 
-router.post('/', roleController.create);
+router.post('/', [authMiddleware, validateIfAdmin], roleController.create);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ router.post('/', roleController.create);
  *          type: string
  */
 // , [authMiddleware, validateIfAdmin]
-router.get('/', roleController.getAll);
+router.get('/', [authMiddleware, validateIfAdmin], roleController.getAll);
 
 /**
  * @swagger
@@ -117,8 +117,8 @@ router.get('/', roleController.getAll);
  *          schema:
  *            type: string
  */
-// authMiddleware,
-router.get('/:id', roleController.getOne);
+
+router.get('/:id', [authMiddleware, validateIfAdmin], roleController.getOne);
 
 /**
  * @swagger
@@ -158,8 +158,8 @@ router.get('/:id', roleController.getOne);
  *          schema:
  *            type: string
  * */
-// , authMiddleware
-router.put('/:id', roleController.update);
+
+router.put('/:id', [authMiddleware, validateIfAdmin], roleController.update);
 
 /**
  * @swagger
@@ -192,7 +192,7 @@ router.put('/:id', roleController.update);
  *          schema:
  *            type: string
  * */
-// , authMiddleware
-router.delete('/:id', roleController.delete);
+
+router.delete('/:id', [authMiddleware, validateIfAdmin], roleController.delete);
 
 export default router;

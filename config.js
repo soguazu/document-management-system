@@ -8,7 +8,7 @@
 const environments = {};
 
 // Staging (default) environment
-environments.staging = {
+environments.stagging = {
     envName: 'staging',
     hashingSecret: process.env.MY_SECRET,
     httpPort: 3000,

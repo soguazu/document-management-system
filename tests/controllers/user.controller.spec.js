@@ -13,7 +13,7 @@ import { User } from '../../app/models/user';
 // import userController from '../../app/controllers/user';
 
 describe('User', () => {
-    beforeEach(function(done) {
+    beforeEach('Remove all data in user DB', function(done) {
         User.remove({}, function() {
             done();
         });
@@ -42,7 +42,7 @@ describe('User', () => {
         it('should create a user if the listed payload is provided a email address,name,password,role', function() {
             let user = {
                 username: 'soguazu',
-                email: 'grey@gmail.com',
+                email: 'grey9@gmail.com',
                 name: {
                     firstname: 'grey',
                     lastname: 'white'
