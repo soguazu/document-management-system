@@ -52,20 +52,12 @@ services.update = async (id, payload) => {
         { new: true }
     );
 
-    if (!user) {
-        return user;
-    }
-
-    return user;
+    return _.pick(user, ['username', 'name', 'email', 'role']);
 };
 
 services.delete = async id => {
     const user = await User.findOneAndDelete(id);
-    if (user) {
-        return user;
-    }
-
-    return false;
+    return _.pick(user, ['username', 'name', 'email', 'role']);
 };
 
 export default services;

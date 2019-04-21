@@ -15,7 +15,6 @@ const Role = mongoose.model('Role', roleSchema);
 function validateRole(role) {
     const Schema = {
         title: Joi.string()
-            .min(5)
             .max(15)
             .required()
     };

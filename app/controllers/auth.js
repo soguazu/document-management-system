@@ -1,12 +1,10 @@
 import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
 import authServices from '../services/authService';
-import tokenServices from '../services/tokenServices';
 import helpers from '../helpers/util';
 import httpStatus from 'http-status-codes';
 
 const authentication = {};
-
 
 // Login controller
 authentication.login = async (request, response) => {
@@ -44,12 +42,9 @@ authentication.login = async (request, response) => {
     //Generating token if login was successfully
     const token = user.generateAuthToken();
 
-    //Save the token in a Database so as to blacklist some token when user logs out
-    const archivedToken = tokenServices.postToken(token);
-
     //Validating that token was saved successfully
-    if (archivedToken) {
-        return response.header('x-auth-token', token).send('Logged in successfully');
+    if (token) {
+        return response.header('x-auth-token', token).send(token);
     }
 
     return response
@@ -57,20 +52,9 @@ authentication.login = async (request, response) => {
         .send(httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR));
 };
 
-
-
-
 // logout controller
 authentication.logout = async (request, response) => {
-    const token = request.header('x-auth-token');
-    const error = await tokenServices.deleteToken(token);
-    if (!error) {
-        return response.send('Logged out successfully');
-    }
-
-    return response
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .send(httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR));
+    response.send('logged out successfully');
 };
 
 export default authentication;
