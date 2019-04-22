@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import userServices from '../services/userServices';
 import roleServices from '../services/roleServices';
+import documentServices from '../services/documentServices';
 
 const helpers = {};
 
@@ -26,6 +27,21 @@ helpers.isEmailUnique = email => {
 helpers.isTitleUnique = title => {
     const role = roleServices.getByTitle(title);
     return role;
+};
+
+helpers.admin = async request => {
+    const documents = await documentServices.getAllDocsForAdmin(request);
+    return documents;
+};
+
+helpers.user = async request => {
+    const documents = await documentServices.getAllDocsForUser(request);
+    return documents;
+};
+
+helpers.guest = async request => {
+    const documents = await documentServices.getAllDocsForGuest(request);
+    return documents;
 };
 
 export default helpers;

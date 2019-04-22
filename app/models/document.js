@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 import Joi from 'joi';
 import mongoose from 'mongoose';
 
 const documentSchema = mongoose.Schema({
-    ownerId: {
-        type: mongoose.Schema.Types.ObjectId,
+    owner: {
+        type: String,
         required: true
     },
     title: {
@@ -26,12 +27,12 @@ const documentSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         required: true,
-        default: Date.now
+        default: Date
     },
     modifiedAt: {
         type: Date,
         required: true,
-        default: Date.now
+        default: Date
     }
 });
 
@@ -40,14 +41,12 @@ const Document = mongoose.model('Document', documentSchema);
 
 function validateDocument(document) {
     const Schema = {
-        ownerId: Joi.ObjectId().required(),
         title: Joi.string()
             .max(255)
             .required(),
+        docType: Joi.string(),
         content: Joi.string().required(),
-        access: Joi.string().required(),
-        createdAt: Joi.Date(),
-        modifiedAt: Joi.Date()
+        access: Joi.string().required()
     };
 
     return Joi.validate(document, Schema);

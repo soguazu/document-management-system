@@ -12,6 +12,7 @@ import authRouter from './app/routes/auth';
 import logoutRouter from './app/routes/logout';
 import userRouter from './app/routes/user';
 import roleRouter from './app/routes/role';
+import documentRouter from './app/routes/document';
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/auth/signout', logoutRouter);
 app.use('/api/users', userRouter);
 app.use('/api/roles', roleRouter);
+app.use('/api/documents', documentRouter);
 
 app.listen(config.httpPort, () => {
     console.log(

@@ -1,22 +1,21 @@
 /* eslint-disable no-undef */
 import 'babel-polyfill';
-import jwt from 'jsonwebtoken';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 chai.use(chaiHttp);
 chai.should();
 
 import app from '../../server';
-import config from '../../config';
 import { Document } from '../../app/models/document';
 
 describe('DOCUMENTS', () => {
-    let token, user;
+    let token;
     beforeEach(function(done) {
         Document.remove({}, function(error) {
             if (error) {
                 done(error);
             }
+            done();
         });
     });
 
@@ -28,13 +27,9 @@ describe('DOCUMENTS', () => {
     });
     describe('/POST document', () => {
         it('should create a new document if required fields are passed', done => {
-            const decrypted = jwt.verify(token, config.hashingSecret);
-            user = decrypted;
-
             const document = {
-                ownerId: user._id,
                 title: 'Lies in Circle',
-                doType: 'friction',
+                docType: 'friction',
                 content: 'testing',
                 access: 'private'
             };
@@ -47,6 +42,89 @@ describe('DOCUMENTS', () => {
                     response.should.have.status(200);
                     done();
                 });
+        });
+    });
+
+    describe('/GET document', () => {
+        it('should return all document that user has access to', done => {
+            chai.request(app)
+                .get('/api/documents')
+                .set('x-auth-token', token)
+                .end(function(error, response) {
+                    response.should.have.status(200);
+                    done();
+                });
+        });
+    });
+
+    describe('PUT document/:id', () => {
+        it('should update the document with the given id', done => {
+            let document = new Document({
+                owner: 'cbdd4071713268b247e0d06',
+                title: 'my title',
+                docType: 'friction',
+                content: 'my content',
+                access: 'public'
+            });
+            document.save(function(error, doc) {
+                chai.request(app)
+                    .put('/api/documents/' + doc.id)
+                    .set('x-auth-token', token)
+                    .send({
+                        title: 'new title',
+                        content: 'new content'
+                    })
+                    .end(function(error, response) {
+                        response.should.have.status(200);
+                        response.body.content.should.equal('new content');
+                        done();
+                    });
+            });
+        });
+    });
+
+    describe('GET document/:id', () => {
+        it('should update the document with the given id', done => {
+            let document = new Document({
+                owner: 'cbdd4071713268b247e0d06',
+                title: 'my title',
+                docType: 'friction',
+                content: 'my content',
+                access: 'private'
+            });
+            document.save(function(error, doc) {
+                chai.request(app)
+                    .get('/api/documents/' + doc._id)
+                    .set('x-auth-token', token)
+                    .end(function(error, response) {
+                        response.should.have.status(200);
+                        response.body.docType.should.equal('friction');
+                        response.body.access.should.equal('private');
+                        console.log(response.body);
+                        done();
+                    });
+            });
+        });
+    });
+
+    describe('DELETE document/:id', () => {
+        it('should delete document with the given id', done => {
+            let document = new Document({
+                owner: 'cbdd4071713268b247e0d06',
+                title: 'my title',
+                docType: 'friction',
+                content: 'my content',
+                access: 'private'
+            });
+            document.save(function(error, doc) {
+                chai.request(app)
+                    .delete('/api/documents/' + doc._id)
+                    .set('x-auth-token', token)
+                    .end(function(error, response) {
+                        response.should.have.status(200);
+                        done();
+                    });
+            });
         });
     });
 });

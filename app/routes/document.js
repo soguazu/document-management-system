@@ -85,6 +85,34 @@ router.post('/', authMiddleware, documentController.create);
 
 /**
  * @swagger
+ * /api/documents:
+ *    get:
+ *      summary: returns all documents.
+ *      tags: [/api/documents]
+ *      description: This should return all documents
+ *      parameters:
+ *        - in: header
+ *          name: x-auth-token
+ *          description: An authorization token
+ *      responses:
+ *        200:
+ *          description: A list of documents
+ *          schema:
+ *            type: object
+ *        400:
+ *          description: Failed Request
+ *          schema:
+ *          type: string
+ *        401:
+ *          description: Unauthorized
+ *          schema:
+ *          type: string
+ */
+
+router.get('/private', authMiddleware, documentController.private);
+
+/**
+ * @swagger
  * /api/users:
  *    get:
  *      summary: returns all documents.
@@ -113,34 +141,45 @@ router.get('/', authMiddleware, documentController.getAll);
 
 /**
  * @swagger
- * /api/users:
+ * /api/documents/search?key:
  *    get:
- *      summary: returns all documents.
+ *      summary: returns the document search for
  *      tags: [/api/documents]
- *      description: This should return all documents
+ *      consumes:
+ *        - application/json
+ *      description: This should return documents that matches the query
  *      parameters:
+ *        - in: query
+ *          name: key
+ *          description: The ID of the user requested.
  *        - in: header
  *          name: x-auth-token
- *          description: An authorization token
- *        - in: params
- *          name: limit
- *          description: An limit the amount of documents returned
+ *          description: Token to authenticate the user requesting for a document.
+ *      schema:
+ *        type: object
+ *        required:
+ *          - id
+ *          - ownerId
+ *          - title
+ *          - docType
+ *          - content
+ *          - createdAt
  *      responses:
  *        200:
- *          description: A list of documents
+ *          description:  success
  *          schema:
- *            type: object
+ *            type: string
  *        400:
- *          description: Failed Request
+ *          description: Bad Request
  *          schema:
- *          type: string
- *        401:
- *          description: Unauthorized
+ *            type: string
+ *        404:
+ *          description: Could not find the document with the given ID
  *          schema:
- *          type: string
+ *            type: string
  */
 
-router.get('/limits', authMiddleware, documentController.getAll);
+router.get('/search', authMiddleware, documentController.getSearched);
 
 /**
  * @swagger
