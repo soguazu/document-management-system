@@ -10,7 +10,6 @@ chai.should();
 
 import app from '../../server';
 import { User } from '../../app/models/user';
-// import userController from '../../app/controllers/user';
 
 describe('User', () => {
     beforeEach('Remove all data in user DB', function(done) {

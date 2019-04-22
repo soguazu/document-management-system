@@ -11,6 +11,9 @@ const documentSchema = mongoose.Schema({
         required: true,
         maxlength: 255
     },
+    docType: {
+        type: String
+    },
     content: {
         type: String,
         required: true

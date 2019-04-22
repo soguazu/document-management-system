@@ -1,7 +1,6 @@
 import express from 'express';
 import documentController from '../controllers/document';
 import authMiddleware from '../middleware/auth';
-import validateIfAdmin from '../middleware/admin';
 
 const router = express.Router();
 
@@ -21,6 +20,9 @@ const router = express.Router();
  *        - in: body
  *          name: title
  *          description: should contain the document title
+ *        - in: body
+ *          name: docType
+ *          description: should contain the document type
  *        - in: body
  *          name: content
  *          description: should contain the document content
@@ -49,6 +51,9 @@ const router = express.Router();
  *          title:
  *            type: string
  *            example: The Secret Montemont
+ *          docType:
+ *            type: string
+ *            example: Designs
  *          content:
  *            type: string
  *          access:
@@ -159,6 +164,7 @@ router.get('/limits', authMiddleware, documentController.getAll);
  *          - id
  *          - ownerId
  *          - title
+ *          - docType
  *          - content
  *          - createdAt
  *      responses:
@@ -195,6 +201,9 @@ router.get('/:id', authMiddleware, documentController.getOne);
  *          name: title
  *          description: The name of the document to be updated.
  *        - in: body
+ *          name: docType
+ *          description: The type of document to be updated.
+ *        - in: body
  *          name: content
  *          description: The content of the document.
  *        - in: body
@@ -208,6 +217,8 @@ router.get('/:id', authMiddleware, documentController.getOne);
  *          id:
  *            type: ObjectId
  *          title:
+ *            type: string
+ *          docType:
  *            type: string
  *          content:
  *            type: string
