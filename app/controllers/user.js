@@ -4,7 +4,7 @@ import { validateUser } from '../models/user';
 import userServices from '../services/userServices';
 import helpers from '../helpers/util';
 
-const user = {};
+let user = {};
 
 user.create = async (request, response) => {
     const { error } = validateUser(request.body);

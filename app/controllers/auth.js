@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
-import authServices from '../services/authService';
+import authServices from '../services/authServices';
 import helpers from '../helpers/util';
 import httpStatus from 'http-status-codes';
 
-const authentication = {};
+let authentication = {};
 
 // Login controller
 authentication.login = async (request, response) => {

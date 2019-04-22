@@ -19,7 +19,7 @@ services.post = async payload => {
     const savedUser = await user.save();
 
     if (savedUser) {
-        return _.pick(user, ['username', 'name', 'email', 'role']);
+        return _.pick(user, ['_id', 'username', 'name', 'email', 'role']);
     }
     return false;
 };

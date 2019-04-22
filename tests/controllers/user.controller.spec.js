@@ -10,7 +10,6 @@ chai.should();
 
 import app from '../../server';
 import { User } from '../../app/models/user';
-// import userController from '../../app/controllers/user';
 
 describe('User', () => {
     beforeEach('Remove all data in user DB', function(done) {
@@ -112,7 +111,7 @@ describe('User', () => {
     });
 
     describe('GET user/:id', () => {
-        it('should update the user with the given id', done => {
+        it('should delete the user with the given id', done => {
             let user = new User({
                 username: 'greywhite',
                 name: {
