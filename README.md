@@ -23,7 +23,7 @@ After installation of both Node.js and MongoDB
 ```
 
 ```
-Clone the repo to your working directory - git clone -
+Clone the repo to your working directory - git clone https://github.com/soguazu/document-management-system.git
 ```
 
 ```
