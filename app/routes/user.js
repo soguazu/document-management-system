@@ -108,8 +108,8 @@ router.post('/', userController.create);
  *          schema:
  *          type: string
  */
-// , [authMiddleware, validateIfAdmin]
-router.get('/', userController.getAll);
+
+router.get('/', [authMiddleware, validateIfAdmin], userController.getAll);
 
 /**
  * @swagger
@@ -155,8 +155,8 @@ router.get('/', userController.getAll);
  *          schema:
  *            type: string
  */
-// authMiddleware,
-router.get('/:id', userController.getOne);
+
+router.get('/:id', authMiddleware, userController.getOne);
 
 /**
  * @swagger
@@ -221,8 +221,8 @@ router.get('/:id', userController.getOne);
  *          schema:
  *            type: string
  * */
-// , authMiddleware
-router.put('/:id', userController.update);
+
+router.put('/:id', [authMiddleware, validateIfAdmin], userController.update);
 
 /**
  * @swagger
@@ -259,7 +259,7 @@ router.put('/:id', userController.update);
  *          schema:
  *            type: string
  * */
-// , authMiddleware
-router.delete('/:id', userController.delete);
+
+router.delete('/:id', [authMiddleware, validateIfAdmin], userController.delete);
 
 export default router;

@@ -95,8 +95,19 @@ services.delete = async id => {
     return document;
 };
 
-services.search = async query => {
-    const documents = await Document.find({ name: { $regex: /query/i } });
+services.search = async (request, query) => {
+    let perPage = Number(request.query.perPage) || 10;
+    let page = request.query.page || 1;
+    let skip = perPage * page - perPage;
+    const documents = await Document.find({
+        $or: [
+            { content: { $regex: new RegExp('.*' + query + '.*', 'gi') } },
+            { title: { $regex: new RegExp('.*' + query + '.*', 'gi') } }
+        ]
+    })
+        .limit(perPage)
+        .skip(skip)
+        .sort('-createdAt');
     return documents;
 };
 
