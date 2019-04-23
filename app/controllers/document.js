@@ -50,8 +50,6 @@ document.getOne = async (request, response) => {
 
 document.private = async (request, response) => {
     const documents = await documentServices.getPrivate(request);
-    console.log(request.user);
-    console.log(documents);
     if (documents) {
         return response.send(documents);
     }
@@ -61,7 +59,6 @@ document.private = async (request, response) => {
 };
 
 document.update = async (request, response) => {
-    console.log(request.user);
     const document = await documentServices.update(
         request.params.id,
         request.body
@@ -86,7 +83,7 @@ document.delete = async (request, response) => {
 };
 
 document.getSearched = async (request, response) => {
-    const documents = await documentServices.search(request.query.key);
+    const documents = await documentServices.search(request, request.query.key);
     if (!documents) {
         return response
             .status(httpStatus.NOT_FOUND)
