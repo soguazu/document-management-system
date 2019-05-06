@@ -11,7 +11,7 @@ const environments = {};
 environments.stagging = {
     envName: 'staging',
     hashingSecret: process.env.MY_SECRET,
-    httpPort: 3000,
+    httpPort: 80,
     db:
         'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true'
 };
@@ -20,7 +20,7 @@ environments.stagging = {
 environments.production = {
     envName: 'production',
     hashingSecret: process.env.MY_SECRET,
-    httpPort: 3000,
+    httpPort: 80,
     db:
         'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true'
 };
@@ -28,7 +28,7 @@ environments.production = {
 environments.test = {
     envName: 'test',
     hashingSecret: process.env.MY_SECRET,
-    httpPort: 3000,
+    httpPort: 80,
     db:
         'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true'
 };
@@ -45,5 +45,5 @@ const currentEnvironment =
             : environments.staging;
 
 // Export the module
-// export default environmentToExport;
-module.exports.environmentToExport = environmentToExport;
+export default environmentToExport;
+// module.exports.environmentToExport = environmentToExport;
