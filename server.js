@@ -1,5 +1,5 @@
+#!/usr/bin/env nodejs;
 import 'dotenv/config';
-
 // import 'babel-polyfill';
 
 import express from 'express';

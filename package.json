@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/soguazu/document-management-system#readme",
   "dependencies": {
+    "Faker": "^0.7.2",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^3.0.5",
     "chai-http": "^4.2.1",

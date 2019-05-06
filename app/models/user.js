@@ -1,8 +1,13 @@
-import Joi from 'joi';
-import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
+/* eslint-disable no-undef */
+// import Joi from 'joi';
+// import jwt from 'jsonwebtoken';
+// import mongoose from 'mongoose';
+// import config from '../../config';
 
-import config from '../../config';
+let Joi = require('joi');
+let mongoose = require('mongoose');
+let jwt = require('jsonwebtoken');
+let config = require('../../config');
 
 const userSchema = mongoose.Schema({
     username: {
@@ -69,4 +74,5 @@ function validateUser(user) {
 
     return Joi.validate(user, Schema);
 }
-export { User, validateUser };
+// export { User, validateUser };
+module.exports = { User, validateUser };

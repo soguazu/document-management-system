@@ -1,5 +1,9 @@
-import Joi from 'joi';
-import mongoose from 'mongoose';
+/* eslint-disable no-undef */
+// import Joi from 'joi';
+// import mongoose from 'mongoose';
+
+let Joi = require('joi');
+let mongoose = require('mongoose');
 
 const roleSchema = mongoose.Schema({
     title: {
@@ -21,4 +25,5 @@ function validateRole(role) {
 
     return Joi.validate(role, Schema);
 }
-export { Role, validateRole };
+// export { Role, validateRole };
+module.exports = { Role, validateRole };

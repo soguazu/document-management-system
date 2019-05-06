@@ -42,4 +42,5 @@ const currentEnvironment =
             : environments.staging;
 
 // Export the module
-export default environmentToExport;
+// export default environmentToExport;
+module.exports.environmentToExport = environmentToExport;
