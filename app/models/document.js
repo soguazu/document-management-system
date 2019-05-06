@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
-// import Joi from 'joi';
-// import mongoose from 'mongoose';
-let Joi = require('joi');
-let mongoose = require('mongoose');
+import Joi from 'joi';
+import mongoose from 'mongoose';
+// let Joi = require('joi');
+// let mongoose = require('mongoose');
 
 const documentSchema = mongoose.Schema({
     owner: {

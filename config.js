@@ -12,7 +12,8 @@ environments.stagging = {
     envName: 'staging',
     hashingSecret: process.env.MY_SECRET,
     httpPort: 3000,
-    db: 'mongodb://localhost/dms'
+    db:
+        'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true'
 };
 
 // Production environment
@@ -20,14 +21,16 @@ environments.production = {
     envName: 'production',
     hashingSecret: process.env.MY_SECRET,
     httpPort: 3000,
-    db: 'mongodb://localhost/dms'
+    db:
+        'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true'
 };
 
 environments.test = {
     envName: 'test',
     hashingSecret: process.env.MY_SECRET,
     httpPort: 3000,
-    db: 'mongodb://localhost/dms-test'
+    db:
+        'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true'
 };
 
 // Determine which environment was passed as a command-line argument

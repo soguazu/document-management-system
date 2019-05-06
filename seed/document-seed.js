@@ -1,17 +1,17 @@
 /* eslint-disable no-undef */
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-// import { Document } from '../app/models/document';
+import { Document } from '../app/models/document';
 
-// import config from './config';
+import config from './config';
 
-let mongoose = require('mongoose');
+// let mongoose = require('mongoose');
 
-let { Document } = require('../app/models/document');
+// let { Document } = require('../app/models/document');
 
 mongoose
     .connect(
-        'mongodb+srv://grey123:grey123@dmscluster-evk9t.mongodb.net/dms?retryWrites=true',
+        ,
         {
             useNewUrlParser: true,
             useCreateIndex: true
