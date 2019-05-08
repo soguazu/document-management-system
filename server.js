@@ -30,8 +30,7 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-let db = config.db;
-console.log(db, 'db');
+
 app.use(express.json());
 mongoose
     .connect(config.db, {
